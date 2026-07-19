@@ -28,11 +28,34 @@ content read.
 dig-tips = "0.1"
 ```
 
+## Usage
+
+A tip is a single-payment CAT send. The canonical path decides (caps / threshold / approval) and only
+then builds the spend, so a capped or declined tip is never constructed:
+
+```rust
+use dig_tips::{build_tip_if_allowed, AutoTipPolicy, LedgerSnapshot, Network, required_signatures};
+
+let policy = AutoTipPolicy::dig_default(dig_asset_id); // default-on, tips the DIG treasury, capped
+let ledger = LedgerSnapshot::default();               // today's counters (caller-owned)
+
+let (decision, maybe_spend) =
+    build_tip_if_allowed(&policy, primary_send_amount, &ledger, my_cats, owner_pk, change_hash)?;
+
+if let Some(spend) = maybe_spend {
+    let sigs = required_signatures(&spend.coin_spends, &Network::Mainnet)?;
+    // caller signs `sigs`, assembles the SpendBundle, and broadcasts — dig-tips never signs.
+}
+```
+
+For the pure policy/decision layer use `decide_auto_tip` / `decide_daily_tip` / `decide_manual_tip`
+(+ `apply_tip` / `is_new_utc_day` for the caller's ledger), and `TipEvent::from_decision` to surface
+the honest, user-facing record. The low-level `build_tip` builds an unconditional tip spend.
+
 ## Status
 
-Genesis scaffold (v0.0.0). The v0.1.0 foundation lands via
-[`dig_ecosystem#1231`](https://github.com/DIG-Network/dig_ecosystem/issues/1231). See `SPEC.md` for
-the normative contract.
+v0.1.0 foundation ([`dig_ecosystem#1231`](https://github.com/DIG-Network/dig_ecosystem/issues/1231)).
+See `SPEC.md` for the normative contract.
 
 ## License
 
