@@ -1,7 +1,7 @@
 //! # dig-tips — the DIG Network canonical tipping expert crate
 //!
 //! `dig-tips` is a **pure, key-free, network-free** SpendBundle-builder for TIPPING on Chia. It
-//! constructs the exact [`CoinSpend`](chia_protocol::CoinSpend)s to tip a CAT (including `$DIG`) to a
+//! constructs the exact [`CoinSpend`]s to tip a CAT (including `$DIG`) to a
 //! recipient, and carries the honest, default-on **auto-tip** to the DIG treasury
 //! (`dig_ecosystem#377`) as pure, capped, declinable policy logic. A tip IS a single CAT payment, so
 //! the on-chain spend is delegated to [`dig_cat`] (the CAT byte-source-of-truth); dig-tips adds only

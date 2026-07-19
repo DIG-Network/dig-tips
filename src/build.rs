@@ -95,24 +95,32 @@ pub fn build_tip_if_allowed(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::error::Error;
     use chia_protocol::Coin;
     use chia_puzzle_types::LineageProof;
-    use dig_cat::{CatError, CatInfo};
-    use crate::error::Error;
     use chia_wallet_sdk::test::BlsPair;
+    use dig_cat::{CatError, CatInfo};
 
     const ASSET: Bytes32 = Bytes32::new([0xABu8; 32]);
     const RECIPIENT: Bytes32 = Bytes32::new([0x77u8; 32]);
 
     /// A structurally-spendable CAT (fabricated lineage proof) — enough to drive the pure builder.
     fn spendable_cat(amount: u64) -> Cat {
-        let coin = Coin::new(Bytes32::from([1u8; 32]), Bytes32::from([0xEEu8; 32]), amount);
+        let coin = Coin::new(
+            Bytes32::from([1u8; 32]),
+            Bytes32::from([0xEEu8; 32]),
+            amount,
+        );
         let proof = LineageProof {
             parent_parent_coin_info: Bytes32::from([1u8; 32]),
             parent_inner_puzzle_hash: Bytes32::from([2u8; 32]),
             parent_amount: amount,
         };
-        Cat::new(coin, Some(proof), CatInfo::new(ASSET, None, Bytes32::from([3u8; 32])))
+        Cat::new(
+            coin,
+            Some(proof),
+            CatInfo::new(ASSET, None, Bytes32::from([3u8; 32])),
+        )
     }
 
     fn request(cats: Vec<Cat>, amount: u64) -> TipRequest {
@@ -135,7 +143,10 @@ mod tests {
     #[test]
     fn insufficient_funds_surfaces_as_error() {
         let err = build_tip(request(vec![spendable_cat(10)], 1_000)).unwrap_err();
-        assert!(matches!(err, Error::Cat(CatError::InsufficientFunds { .. })));
+        assert!(matches!(
+            err,
+            Error::Cat(CatError::InsufficientFunds { .. })
+        ));
     }
 
     #[test]

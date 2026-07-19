@@ -188,7 +188,11 @@ mod tests {
 
     #[test]
     fn disabled_skips() {
-        let d = decide_auto_tip(&AutoTipPolicy::disabled(ASSET), 1_000, &LedgerSnapshot::default());
+        let d = decide_auto_tip(
+            &AutoTipPolicy::disabled(ASSET),
+            1_000,
+            &LedgerSnapshot::default(),
+        );
         assert_eq!(d, TipDecision::SkipDisabled);
     }
 
