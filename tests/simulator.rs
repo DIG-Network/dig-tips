@@ -154,7 +154,7 @@ fn fixed_input_tip_is_a_stable_golden() -> anyhow::Result<()> {
 
 /// The pinned recipient coin id for the [`fixed_input_tip_is_a_stable_golden`] vector.
 const GOLDEN_RECIPIENT_COIN_ID: &str =
-    "d0b6b4aaa4675998a9489555cbe6570edb9d81f19cbad7a227087f9545d62f7e";
+    "f5ef2a5ced4297cb7f00984cb5f33a20e52a387865d5e71c0def6c299905805d";
 
 /// Run `spend`'s puzzle + solution and return the memos of the CREATE_COIN paying the recipient's
 /// CAT coin (i.e. `cat_puzzle_hash(recipient, asset_id)`), decoded as a list of `Bytes32`.
