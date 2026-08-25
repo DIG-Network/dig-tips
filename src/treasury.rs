@@ -39,4 +39,22 @@ mod tests {
     fn treasury_address_matches_the_canonical_constant() {
         assert_eq!(TREASURY_ADDRESS, dig_constants::DIG_TREASURY_ADDRESS);
     }
+
+    /// The two assertions above compare this crate's re-export against `dig_constants`, so they
+    /// hold for ANY value the upstream constant takes and would stay green if a dig-constants
+    /// bump silently moved the treasury. That is a money destination -- every default tip this
+    /// crate builds pays it -- so it is pinned here against the literal bytes as well. A
+    /// deliberate treasury migration is expected to fail this test and be re-blessed knowingly.
+    #[test]
+    fn treasury_is_pinned_to_its_literal_bytes() {
+        assert_eq!(
+            hex::encode(default_recipient()),
+            "ec7c304708c7d59c078d5ae098d0dea004decf47fa1cafebb266c10ad6466ce8",
+            "the default tip recipient's puzzle hash changed"
+        );
+        assert_eq!(
+            TREASURY_ADDRESS, "xch1a37rq3cgcl2ecpudttsf35x75qzdan68lgw2l6ajvmqs44jxdn5qv6pk3y",
+            "the treasury address changed"
+        );
+    }
 }

@@ -13,7 +13,7 @@
 # signing boundary — lands via the gated PR that bumps this to 0.1.0 (DIG-Network/dig_ecosystem#1231).
 [package]
 name = "dig-tips"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 rust-version = "1.75.0"
 license = "Apache-2.0 OR MIT"
@@ -25,15 +25,15 @@ categories = ["cryptography::cryptocurrencies", "api-bindings"]
 
 [dependencies]
 # The CAT primitive (send/melt/selection builders) — $DIG is a CAT; a tip IS a CAT send.
-dig-cat = "0.2"
+dig-cat = "0.3"
 # The canonical DIG treasury constant (DIG_TREASURY_INNER_PUZZLE_HASH / TREASURY_ADDRESS) — the
 # default auto-tip recipient. Reused from the foundation, never hand-copied.
-dig-constants = "0.10"
+dig-constants = "0.11"
 # The chia-wallet-sdk umbrella is the byte-source-of-truth for the CAT puzzle/layer/spend + the pure
-# signing calculator, pinned to the 0.34 family the whole DIG on-chain line rides (chia-protocol 0.36.1).
-chia-wallet-sdk = "0.34"
-# Direct type deps, pinned to EXACTLY the versions chia-wallet-sdk 0.30 resolves to (a mismatch is a
-# hard cargo error, given chia-wallet-sdk 0.34). chia-protocol carries wire types (`Coin`, `CoinSpend`, `Bytes32`).
+# signing calculator, pinned to the 0.36 family the whole DIG on-chain line rides (chia-protocol 0.36.1).
+chia-wallet-sdk = "0.36"
+# Direct type deps, pinned to EXACTLY the versions chia-wallet-sdk 0.36 resolves to (a mismatch is a
+# hard cargo error, given chia-wallet-sdk 0.36). chia-protocol carries wire types (`Coin`, `CoinSpend`, `Bytes32`).
 chia-protocol = "0.36.1"
 chia-puzzle-types = "0.36.1"
 clvm-traits = "0.36.1"
@@ -42,6 +42,6 @@ clvmr = "0.16.2"
 thiserror = "2"
 
 [dev-dependencies]
-chia-sdk-test = "0.34"
+chia-sdk-test = "0.36"
 hex = "0.4"
 anyhow = "1"
