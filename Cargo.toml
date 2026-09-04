@@ -13,7 +13,7 @@
 # signing boundary — lands via the gated PR that bumps this to 0.1.0 (DIG-Network/dig_ecosystem#1231).
 [package]
 name = "dig-tips"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 rust-version = "1.75.0"
 license = "Apache-2.0 OR MIT"
